@@ -69,6 +69,7 @@ const IndexPage: NextPageWithLayout = () => {
           {page.items.map((item) => (
             <article key={item.id}>
               <h3>{item.title}</h3>
+              <p>lucky number {item.lucky_number}</p>
               <Link href={`/post/${item.id}`}>View more</Link>
             </article>
           ))}

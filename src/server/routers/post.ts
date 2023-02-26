@@ -98,7 +98,7 @@ export const postRouter = router({
     )
     .mutation(async ({input}) => {
       const post = await prisma.post.create({
-        data: input,
+        data: {...input, lucky_number: Math.floor(Math.random() * 100)},
         select: defaultPostSelect,
       });
       return post;
