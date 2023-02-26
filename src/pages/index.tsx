@@ -1,9 +1,9 @@
-import { trpc } from '../utils/trpc';
-import { NextPageWithLayout } from './_app';
-import { inferProcedureInput } from '@trpc/server';
+import {trpc} from '../utils/trpc';
+import {NextPageWithLayout} from './_app';
+import {inferProcedureInput} from '@trpc/server';
 import Link from 'next/link';
-import { Fragment } from 'react';
-import type { AppRouter } from '~/server/routers/_app';
+import {Fragment} from 'react';
+import type {AppRouter} from '~/server/routers/_app';
 
 const IndexPage: NextPageWithLayout = () => {
   const utils = trpc.useContext();
@@ -35,7 +35,7 @@ const IndexPage: NextPageWithLayout = () => {
 
   return (
     <>
-      <h1>Welcome to your tRPC starter!</h1>
+      <h1>Welcome to your tRPC starter! This is a PR TEST</h1>
       <p>
         If you get stuck, check <a href="https://trpc.io">the docs</a>, write a
         message in our <a href="https://trpc.io/discord">Discord-channel</a>, or
@@ -60,8 +60,8 @@ const IndexPage: NextPageWithLayout = () => {
         {postsQuery.isFetchingPreviousPage
           ? 'Loading more...'
           : postsQuery.hasPreviousPage
-          ? 'Load More'
-          : 'Nothing more to load'}
+            ? 'Load More'
+            : 'Nothing more to load'}
       </button>
 
       {postsQuery.data?.pages.map((page, index) => (
@@ -101,7 +101,7 @@ const IndexPage: NextPageWithLayout = () => {
 
             $form.reset();
           } catch (cause) {
-            console.error({ cause }, 'Failed to add post');
+            console.error({cause}, 'Failed to add post');
           }
         }}
       >
@@ -121,7 +121,7 @@ const IndexPage: NextPageWithLayout = () => {
         <br />
         <input type="submit" disabled={addPost.isLoading} />
         {addPost.error && (
-          <p style={{ color: 'red' }}>{addPost.error.message}</p>
+          <p style={{color: 'red'}}>{addPost.error.message}</p>
         )}
       </form>
     </>

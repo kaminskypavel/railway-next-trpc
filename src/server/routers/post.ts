@@ -2,11 +2,11 @@
  *
  * This is an example router, you can delete this file and then update `../pages/api/trpc/[trpc].tsx`
  */
-import { router, publicProcedure } from '../trpc';
-import { Prisma } from '@prisma/client';
-import { TRPCError } from '@trpc/server';
-import { z } from 'zod';
-import { prisma } from '~/server/prisma';
+import {router, publicProcedure} from '../trpc';
+import {Prisma} from '@prisma/client';
+import {TRPCError} from '@trpc/server';
+import {z} from 'zod';
+import {prisma} from '~/server/prisma';
 
 /**
  * Default selector for Post.
@@ -17,6 +17,7 @@ const defaultPostSelect = Prisma.validator<Prisma.PostSelect>()({
   id: true,
   title: true,
   text: true,
+  lucky_number: true,
   createdAt: true,
   updatedAt: true,
 });
@@ -29,7 +30,7 @@ export const postRouter = router({
         cursor: z.string().nullish(),
       }),
     )
-    .query(async ({ input }) => {
+    .query(async ({input}) => {
       /**
        * For pagination docs you can have a look here
        * @see https://trpc.io/docs/useInfiniteQuery
@@ -37,7 +38,7 @@ export const postRouter = router({
        */
 
       const limit = input.limit ?? 50;
-      const { cursor } = input;
+      const {cursor} = input;
 
       const items = await prisma.post.findMany({
         select: defaultPostSelect,
@@ -46,8 +47,8 @@ export const postRouter = router({
         where: {},
         cursor: cursor
           ? {
-              id: cursor,
-            }
+            id: cursor,
+          }
           : undefined,
         orderBy: {
           createdAt: 'desc',
@@ -73,10 +74,10 @@ export const postRouter = router({
         id: z.string(),
       }),
     )
-    .query(async ({ input }) => {
-      const { id } = input;
+    .query(async ({input}) => {
+      const {id} = input;
       const post = await prisma.post.findUnique({
-        where: { id },
+        where: {id},
         select: defaultPostSelect,
       });
       if (!post) {
@@ -95,7 +96,7 @@ export const postRouter = router({
         text: z.string().min(1),
       }),
     )
-    .mutation(async ({ input }) => {
+    .mutation(async ({input}) => {
       const post = await prisma.post.create({
         data: input,
         select: defaultPostSelect,
